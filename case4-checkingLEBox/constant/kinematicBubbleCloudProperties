@@ -1,0 +1,173 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      kinematicBubbleCloudProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+bubbleProperties
+{
+    //- ML: flag for activation of bubble dynamics
+    bubble_activation       false;
+    //- ML: surface tension for bubble dynamics
+    bubbleSigma             0.07;
+    //- ML: initial pressure for bubble dynamics
+    p0                      101325;
+    //- ML: initial radius for bubble dynamics            
+    R0                      1e-06;
+    //- ML: vapour pressure for bubble dynamics            
+    pv                      2300;
+    //- ML: time step for each loop of RP solver-important
+    RPdT                    5.0e-6; //1.0e-7 ; 
+    //- ML: kappa isotropic value for bubble dynamics            
+    bubbleKappa             1.4;
+    //- ML: Averaging distance for bubble dynamics
+    averagingDistance       5;//5;
+    //- ML: ODE solver type for bubble dynamics
+    ODESolverType           RKF45;
+}
+
+Transition_Algorithm
+{
+    //- ML: flag for activation of EulerianToLagrangian
+    EulerianToLagrangian_activation         true; 
+
+    //- ML:Number of cells that trigger the transtion from Eulerian to Lagrangian
+    EL_cellThreshold                        0;
+
+    //- ML: Set threshold for tracking structures with alpha below this Threshold    
+    EL_alphaThreshold                       0.999;
+
+    //- ML: flag for activation of EulerianToLagrangian
+    LagrangianToEulerian_activation         true;
+
+    //- ML:sigma = bubbleRadius / deviation-> Gaussian standard deviation (for 99% volume within radius)
+    LE_deviation                            3.0; 
+
+    //- ML:Minimum liquid volume fraction value that lagrangian cell can occupy
+    LE_minCellOccupancy                     0.3;
+    
+    //- ML:Number of cells that trigger the transtion from Lagrangian to Eulerian
+    LE_cellThreshold                        20000;
+
+    //- ML: Set threshold for interface proximity that trigger the transtion from Lagrangian to Eulerian
+    LE_alphaThreshold                       0.5;
+
+    //- ML: Minimum bubble radius threshold that will be tracked
+    LE_bubbleSizeThreshold                  5e-07;
+
+    //- ML: Define the box boundaries for tracking- Only lagrangian inside this box will be tracked
+    LE_boxCheckEnabled                      true;
+
+    LE_boxTopLeftCorner                 (0.0 0.1 0.0);  // the top-left corner coordinates at the back face
+
+    LE_boxBottomRightCorner             (0.2 0.0 0.1);  // the bottom-right corner coordinates at the front face
+}
+
+solution
+{
+    active          true;
+    coupled         yes;
+    transient       yes;
+    cellValueSourceCorrection no;
+    maxCo           0.2;
+
+    sourceTerms
+    {
+        schemes
+        {
+            U               semiImplicit 1;
+        }
+    }
+
+    interpolationSchemes
+    {
+        rho             cell;
+        U               cellPoint;
+        muc             cell;
+        p               cell;
+    }
+
+    integrationSchemes
+    {
+        U               Euler;
+    }
+}
+
+constantProperties
+{
+    //- ML: density of vapor bubble
+    rho0            0.02308;
+}
+
+subModels
+{
+    particleForces
+    {
+    }
+
+    
+    injectionModels
+    {
+    
+        model1
+        {
+            type                patchInjection;
+            patch               inlet;
+            parcelBasisType     fixed;
+            parcelsPerSecond    1000;
+            nParticle           1;
+            U0                  (2 0 0);
+            SOI                 0;
+            duration            1;
+            massTotal           0;
+            flowRateProfile constant 1;
+            sizeDistribution
+            {
+                type        fixedValue;
+                fixedValueDistribution
+                {
+                    value    0.003;
+                }
+            }
+        }
+    }
+    
+    dispersionModel none;
+
+    patchInteractionModel standardWallInteraction;
+
+    stochasticCollisionModel none;
+
+    surfaceFilmModel none;
+
+    standardWallInteractionCoeffs
+    {
+        type            rebound;
+    }
+}
+
+cloudFunctions
+{
+    KinematicReynoldsNumber1
+    {
+        type    ReynoldsNumber;
+    }
+
+    KinematicWeberNumber1
+    {
+        type    WeberNumber;
+        sigma   0.72;
+    }
+}
+
+// ************************************************************************* //

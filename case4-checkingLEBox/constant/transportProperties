@@ -1,0 +1,48 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2406                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases          (water air);
+
+hybridPhaseChangeTwoPhaseMixture SchnerrSauer;
+
+pSat            2300;   // Saturation pressure
+
+sigma           0.07;
+
+water
+{
+    transportModel  Newtonian;
+    nu              9e-07;
+    rho             1000;
+}
+
+air
+{
+    transportModel  Newtonian;
+    nu              4.273e-04;
+    rho             0.02308;
+}
+
+SchnerrSauerCoeffs
+{
+    n               1.6e+13;
+    dNuc            2.0e-06;
+    Cc              0;
+    Cv              0;
+}
+
+
+// ************************************************************************* //
