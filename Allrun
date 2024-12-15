@@ -1,0 +1,66 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+echo "Keep calm and it is running"
+
+echo "Compiling Solver"
+
+cd interPhaseChangeBubbleFoam
+
+./Allwmake
+
+
+echo "Case 1"
+
+cd ../case1-checkingInterFace
+
+restore0Dir
+
+blockMesh > log.blockMesh
+
+setFields > log.setFields
+
+runApplication interPhaseChangeBubbleFoam
+
+touch case1-checkingInterFace-final.foam
+
+echo "Case 2"
+
+cd ../case2-checkingLagrangianCellThreshold
+
+restore0Dir
+
+blockMesh > log.blockMesh
+
+runApplication interPhaseChangeBubbleFoam
+
+touch case2-checkingLagrangianCellThreshold-final.foam
+
+echo "Case 3"
+cd ../case3-checkingEulerianCellThreshold
+
+restore0Dir
+
+blockMesh > log.blockMesh
+
+setFields > log.setFields
+
+runApplication interPhaseChangeBubbleFoam
+
+touch case3-checkingEulerianCellThreshold-final.foam
+
+echo "Case 4"
+cd ../case4-checkingLEBox
+
+restore0Dir
+
+blockMesh > log.blockMesh
+
+runApplication interPhaseChangeBubbleFoam
+
+touch case4-checkingLEBox-final.foam
+
+echo "Done"
+#------------------------------------------------------------------------------
+

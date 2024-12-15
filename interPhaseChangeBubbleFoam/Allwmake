@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+cd hybridTransportModels/hybridTwoPhaseMixture/
+
+wclean
+wmake
+
+cd ../hybridIncompressible/
+
+wclean
+wmake
+
+cd ../../hybridPhaseChangeTwoPhaseMixtures
+
+wclean
+wmake
+
+cd ../bubbleDynamics/
+
+wclean
+wmake
+
+cd ..
+
+wclean
+wmake
+

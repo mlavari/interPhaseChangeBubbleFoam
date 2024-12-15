@@ -1,0 +1,3 @@
+hybridTwoPhaseMixture/hybridTwoPhaseMixture.C
+
+LIB = $(FOAM_USER_LIBBIN)/libhybridTwoPhaseMixture

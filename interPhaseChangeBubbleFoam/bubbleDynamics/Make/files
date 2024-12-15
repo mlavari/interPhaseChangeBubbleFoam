@@ -1,0 +1,29 @@
+PARCELS=parcels
+BASEPARCELS=$(PARCELS)/baseClasses
+DERIVEDPARCELS=$(PARCELS)/derived
+
+CLOUDS=clouds
+BASECLOUDS=$(CLOUDS)/baseClasses
+DERIVEDCLOUDS=$(CLOUDS)/derived
+
+
+/* Cloud base classes */
+$(BASECLOUDS)/kinematicBubbleCloud/kinematicBubbleCloud.C
+
+/* kinematicBubble parcel sub-models */
+KINEMATICPARCEL=$(DERIVEDPARCELS)/basicKinematicBubbleParcel
+$(KINEMATICPARCEL)/defineBasicKinematicBubbleParcel.C
+$(KINEMATICPARCEL)/makeBasicKinematicBubbleParcelSubmodels.C
+
+
+/* kinematicBubble colliding parcel sub-models */
+KINEMATICCOLLIDINGPARCEL=$(DERIVEDPARCELS)/basicKinematicBubbleCollidingParcel
+$(KINEMATICCOLLIDINGPARCEL)/defineBasicKinematicBubbleCollidingParcel.C
+$(KINEMATICCOLLIDINGPARCEL)/makeBasicKinematicBubbleCollidingParcelSubmodels.C
+
+/* kinematicBubble MPPIC parcel sub-models */
+KINEMATICMPPICPARCEL=$(DERIVEDPARCELS)/basicKinematicBubbleMPPICParcel
+$(KINEMATICMPPICPARCEL)/defineBasicKinematicBubbleMPPICParcel.C
+$(KINEMATICMPPICPARCEL)/makeBasicKinematicBubbleMPPICParcelSubmodels.C
+
+LIB = $(FOAM_USER_LIBBIN)/libbubbleDynamics

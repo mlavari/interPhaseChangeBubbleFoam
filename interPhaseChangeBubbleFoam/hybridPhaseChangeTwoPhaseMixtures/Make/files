@@ -1,0 +1,7 @@
+hybridPhaseChangeTwoPhaseMixture/hybridPhaseChangeTwoPhaseMixture.C
+hybridPhaseChangeTwoPhaseMixture/hybridPhaseChangeTwoPhaseMixtureNew.C
+Kunz/Kunz.C
+Merkle/Merkle.C
+SchnerrSauer/SchnerrSauer.C
+
+LIB = $(FOAM_USER_LIBBIN)/libhybridPhaseChangeTwoPhaseMixtures

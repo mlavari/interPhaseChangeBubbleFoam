@@ -1,0 +1,39 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions      # Tutorial clean functions
+#------------------------------------------------------------------------------
+
+echo "wcleaning Solver"
+
+cd interPhaseChangeBubbleFoam
+
+wclean all
+
+echo "Cleaning Case 1"
+
+cd ../case1-checkingInterFace
+
+cleanCase0
+
+echo "Cleaning Case 2"
+
+cd ../case2-checkingLagrangianCellThreshold
+
+cleanCase0
+
+echo "Cleaning Case 3"
+
+cd ../case3-checkingEulerianCellThreshold
+
+cleanCase0
+
+echo "Cleaning Case 4"
+
+cd ../case4-checkingLEBox
+
+cleanCase0
+
+cd ..
+
+echo "Cleaning Done"
+# -----------------------------------------------------------------------------
