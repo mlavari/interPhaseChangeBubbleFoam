@@ -12,7 +12,7 @@ Explanation:
 
 The interPhaseChangeBubbleFoam solver is designed for simulating multiphase flows involving bubbles. It incorporates both the Lagrangian and Eulerian frameworks, which allow for detailed tracking of individual bubbles (Lagrangian) while also capturing the overall fluid flow behavior (Eulerian). This flexibility makes it suitable for a wide range of applications in bubble dynamics and multiphase simulations. The provided tutorial cases and ParaView state files facilitate the visualization and analysis of simulation results, offering a comprehensive workflow for studying bubble behavior in various conditions. 
 
-Please cite the work as: Cite as: Lavari, M.: interPhaseChangeBubbleFoam: A hybrid Eulerian-Lagrangian solver to capture nuclei effects on hydrodynamic cavitation. In Proceedings of CFD with OpenSource Software, 2024, Edited by Nilsson. H., [http://dx.doi.org/10.17196/OS CFD#YEAR 2024] (https://dx.doi.org/10.17196/OS_CFD#YEAR_2024)
+Please cite the work as: Cite as: Lavari, M.: interPhaseChangeBubbleFoam: A hybrid Eulerian-Lagrangian solver to capture nuclei effects on hydrodynamic cavitation. In Proceedings of CFD with OpenSource Software, 2024, Edited by Nilsson. H., https://dx.doi.org/10.17196/OS_CFD#YEAR_2024.
 
 Thanks,
 ML
